@@ -42,15 +42,17 @@ X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 # on divise les données en données d'entrainement et de test
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
-# on crée le modèle
+# on crée le modèle RandomForestRegressor = une valeur continue alors que RandomForestClassifier = une catégorie
 model = RandomForestRegressor(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
 # on évalue le modèle
 y_pred = model.predict(X_test)
+accuracy = model.score(X_test, y_test)
 rmse = root_mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
+print(f"✅ Accuracy : {round(accuracy * 100, 2)} %")
 print(f"✅ RMSE : {round(rmse, 2)} €") # a ce que j'ai compris c'est l'erreur moyenne de la prédiction
 print(f"✅ R²   : {round(r2, 4)}") # et la c'est le coefficient de détermination
 
